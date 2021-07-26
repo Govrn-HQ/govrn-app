@@ -1,0 +1,24 @@
+.footer {
+  margin-top: 50px;
+  border-top: 1px solid #ededed;
+  padding: 15px 30px 40px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo p {
+  font-family: 'Proxima Nova', sans-serif;
+  font-size: 12px;
+  color: #222525;
+  line-height: 0px;
+}
+
+.social a {
+  padding: 3px;
+  opacity: 0.7;
+}
+
+.social a:hover {
+  opacity: 1;
+}

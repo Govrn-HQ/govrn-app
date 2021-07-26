@@ -1,0 +1,37 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding: 0px 8%;
+}
+
+.linkText {
+  font-family: 'Proxima Nova', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000;
+  padding: 25px;
+  opacity: 0.5;
+}
+
+.linkText:hover {
+  opacity: 1;
+}
+
+.greeting {
+  display: flex;
+  align-items: center;
+  opacity: 0.5;
+}
+
+.greeting:hover {
+  opacity: 1;
+}
+
+.greeting p {
+  font-family: 'Proxima Nova', sans-serif;
+  font-size: 15px;
+  color: #000000;
+  padding: 13px;
+}

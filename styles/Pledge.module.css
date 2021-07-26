@@ -1,0 +1,91 @@
+.pledge {
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+  font-family: 'Proxima Nova', sans-serif;
+}
+
+.imgDiv {
+  width: 34%;
+  margin-top: 25px;
+}
+
+.img {
+  margin-left: 25%;
+}
+
+.imgDiv span {
+  margin-top: 13%;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.gtc {
+  float: left;
+  margin-left: 7%;
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.gvrn {
+  float: right;
+  margin-right: 17%;
+  color: #000000;
+  background-color: #23db5c;
+}
+
+.descDiv {
+  width: 41%;
+}
+
+.descDiv h2 {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  color: #1d0039;
+}
+
+.description {
+  margin-top: 30px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1d0039;
+  margin-bottom: 30px;;
+}
+
+.info {
+  margin-top: 15px;;
+  font-size: 18px;
+  line-height: 24px;
+  color: #222525;
+}
+
+.descDiv button {
+  margin-top: 20px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #e02097;
+  border-radius: 5px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #e02097;
+  text-decoration: none;
+}
+
+.descDiv button:hover {
+  background-color: #b41b79;
+}
+
+.pledgeBtn {
+  float: left;
+  margin-left: 7%;
+}
+
+.applyBtn {
+  float: right;
+  margin-right: 7%;
+}

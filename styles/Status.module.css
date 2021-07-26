@@ -15,7 +15,7 @@
 }
 
 .status p {
-  margin-bottom: 24px;
+  margin-bottom: 26px;
   font-size: 14px;
   line-height: 20px;
   color: #222525;
@@ -23,15 +23,11 @@
 
 .statusMsg {
   display: flex;
-  justify-content: space-between;
-  padding-left: 10px;
-  padding-right: 75px;
 }
 
 .statusMsg div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  text-align: center;
+  width: 100%;
 }
 
 .statusMsg div span {
@@ -42,10 +38,10 @@
   box-shadow: 3px 3px 3px #e0e0e0;
   border-radius: 100%;
   padding: 5px 13px 5px 13px;
-  margin-bottom: 10px;
 }
 
 .statusMsg div h4 {
+  margin-top: 15px;
   text-align: center;
   font-size: 18px;
   font-weight: 700;

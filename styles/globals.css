@@ -3,3 +3,15 @@
 a {
   text-decoration: none;
 }
+
+.hide {
+  display: none;
+}
+
+#WEB3_CONNECT_MODAL_ID {
+  font-family: 'Proxima Nova', sans-serif;
+}
+
+.walletconnect-modal__mobile__toggle {
+  display: none !important;
+}

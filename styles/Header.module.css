@@ -4,10 +4,10 @@
   align-items: center;
   margin-top: 15px;
   padding: 0px 8%;
+  font-family: 'Proxima Nova', sans-serif;
 }
 
 .linkText {
-  font-family: 'Proxima Nova', sans-serif;
   font-weight: 600;
   font-size: 16px;
   color: #000000;
@@ -17,6 +17,19 @@
 
 .linkText:hover {
   opacity: 1;
+}
+
+.connect {
+  border: 1px solid #e02097;
+  border-radius: 25px;
+  color: #e02097;
+  padding: 7px 15px 7px 15px;
+  font-size: 16px;
+}
+
+.connect:hover {
+  color: #ffffff;
+  background-color: #e02097;
 }
 
 .greeting {
@@ -30,7 +43,6 @@
 }
 
 .greeting p {
-  font-family: 'Proxima Nova', sans-serif;
   font-size: 15px;
   color: #000000;
   padding: 13px;

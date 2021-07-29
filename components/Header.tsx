@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Header.module.css'
-import Web3ModalProvider from './hello.ts'
+//import Web3ModalProvider from './hello.ts'
 import { useState } from 'react'
 
 import { ethers } from 'ethers'
@@ -9,7 +9,7 @@ import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider' 
 
 const Header = () => {
-  const web3modalprovider = new Web3ModalProvider();
+  //const web3modalprovider = new Web3ModalProvider();
   const [connect, setConnect] = useState(false);
   async function connection() {
     const providerOptions = {

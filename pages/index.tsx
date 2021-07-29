@@ -1,8 +1,8 @@
 import Layout from '../components/Layout'
-import Header from '../components/Header.tsx'
-import Pledge from '../components/Pledge.tsx'
-import Status from '../components/Status.tsx'
-import Footer from '../components/Footer.tsx'
+import Header from '../components/Header'
+import Pledge from '../components/Pledge'
+import Status from '../components/Status'
+import Footer from '../components/Footer'
 
 const Index = () => {
   return(

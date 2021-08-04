@@ -31,4 +31,7 @@ yarn-error.log*
 .env.production.local
 
 # vercel
-.vercel
+.verce
+
+# swp
+*.swp

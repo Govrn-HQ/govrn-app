@@ -6,7 +6,7 @@
 }
 
 .imgDiv {
-  width: 34%;
+  width: 28%;
   margin-top: 25px;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .descDiv {
-  width: 41%;
+  width: 47%;
 }
 
 .descDiv h2 {
@@ -52,18 +52,26 @@
   font-size: 14px;
   line-height: 20px;
   color: #1d0039;
-  margin-bottom: 30px;;
+  margin-bottom: 15px;
 }
 
-.info {
-  margin-top: 15px;;
+.donation {
+  display: flex;
+}
+
+.donation div {
+  width: 50%;
+}
+
+.donation p {
+  margin-top: 10px;
   font-size: 18px;
   line-height: 24px;
   color: #222525;
 }
 
 .descDiv button {
-  margin-top: 20px;
+  margin-top: 25px;
   border-style: solid;
   border-width: 2px;
   border-color: #e02097;

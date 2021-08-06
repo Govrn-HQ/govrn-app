@@ -22,8 +22,16 @@ const Pledge: React.FC<IPledgeProps> = ({ connect, pledge, data, connected }) =>
       <div className={styles.descDiv}>
         <h2>{data.display_name}</h2>
         <p className={styles.description}>{data.description}</p>
-        <p className={styles.info}><b>Total Donated:</b> $</p>
-        <p className={styles.info}><b>Total Donors:</b></p>
+        <div className={styles.donation}>
+          <div>
+            <p><b>Total Donated:</b> $</p>
+            <p><b>Total Donors:</b></p>
+          </div>
+          <div>
+            <p><b>Your Donation:</b> $</p>
+            <p><b>Your Votes:</b></p>
+          </div>
+        </div>
         <button onClick={connected ? () => pledge() : () => connect()} className={styles.pledgeBtn}>Pledge to be a Voting Member</button>
         <button className={styles.applyBtn}>Apply to be an Outcome Leader</button>
       </div>

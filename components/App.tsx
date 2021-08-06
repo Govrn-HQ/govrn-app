@@ -123,14 +123,23 @@ class App extends React.Component<any, any> {
       'all hail moloch'
     );
   }
+
+  /*public async withdraw() {
+    if (this.moloch == null) {
+      return;
+    }
+
+    await this.moloch.rageQuit();
+  }*/
  
   render() {
+    const { data, statusData } = this.props;
     const { connected } = this.state;
     return (
       <>
         <Header connect={() => this.connectWallet()} connected={connected} />
-        <Pledge connect={() => this.connectWallet()} pledge={() => this.pledgeVotingMember()} data={this.props.data} connected={connected} />
-        <Status />
+        <Pledge connect={() => this.connectWallet()} pledge={() => this.pledgeVotingMember()} data={data} connected={connected} />
+        <Status statusData={statusData} obd_status={data.obd_status}/>
         <Footer />
       </>
     );

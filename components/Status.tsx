@@ -2,11 +2,36 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Status.module.css'
 
-const Status = () => {
+interface IStatusProps {
+  statusData: any;
+  obd_status: string;
+}
+
+const Status: React.FC<IStatusProps> = ({ statusData, obd_status }) => {
+  let statusBar_width = '';
+  switch(obd_status) {
+    case 'Request':
+      statusBar_width = 'width_10';
+      break;
+    case 'Proposal Submitted':
+      statusBar_width = 'width_30';
+      break;
+    case 'Voting':
+      statusBar_width = 'width_50';
+      break;
+    case 'In Progress':
+      statusBar_width = 'width_70';
+      break;
+    case 'Closed':
+      statusBar_width ='width_100';
+      break;
+    default:
+      break;
+  }
   return (
     <div className={styles.status}>
-      <h3>Request for Outcome-Based Donation</h3>
-      <p>This Outcome Based-Donation is in it&#39;s initial fundraising form. This means we need to crowdfund around this outcome to show it&#39;s a priority. As more money is pledged, it incentivizes experts and leaders to submit metrics or proposals to be used.<br/>Note: All donations are pledges and you <b>will be able to reclaim your pledge</b> until a metric has been voted and determined (e.g. Rage-quitable)</p>
+      <h3>{statusData.display_title}</h3>
+      <p>{statusData.display_description}</p>
       <div className={styles.statusMsg}>
         <div>
           <span>1</span>
@@ -30,7 +55,7 @@ const Status = () => {
         </div>
       </div>
       <div className={styles.statusBarWrap}>
-        <div className={styles.statusBar}>
+        <div className={`${styles.statusBar} ${statusBar_width}`}>
         </div>
       </div>
     </div>

@@ -8,6 +8,26 @@ a {
   display: none;
 }
 
+.width_10 {
+  width: 10%;
+}
+
+.width_30 {
+  width: 30%;
+}
+
+.width_50 {
+  width: 50%;
+}
+
+.width_70 {
+  width: 70%;
+}
+
+.width_100 {
+  width: 100%;
+}
+
 #WEB3_CONNECT_MODAL_ID {
   font-family: 'Proxima Nova', sans-serif;
 }

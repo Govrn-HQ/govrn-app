@@ -8,7 +8,7 @@ interface IStatusProps {
 }
 
 const Status: React.FC<IStatusProps> = ({ statusData, obd_status }) => {
-  let statusBar_width = '';
+  let statusBar_width: string;
   switch(obd_status) {
     case 'Request':
       statusBar_width = 'width_10';
@@ -23,9 +23,10 @@ const Status: React.FC<IStatusProps> = ({ statusData, obd_status }) => {
       statusBar_width = 'width_70';
       break;
     case 'Closed':
-      statusBar_width ='width_100';
+      statusBar_width = 'width_100';
       break;
     default:
+      statusBar_width = 'width_0';
       break;
   }
   return (

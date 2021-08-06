@@ -8,6 +8,10 @@ a {
   display: none;
 }
 
+.width_0 {
+  width: 0%;
+}
+
 .width_10 {
   width: 10%;
 }

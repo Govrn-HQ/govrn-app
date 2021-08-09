@@ -39,6 +39,7 @@ class App extends React.Component<any, any> {
   public web3Modal: Web3Modal;
   public state: IAppState;
   public moloch: any;
+  public gasLimit: object;
 
   constructor(props: any) {
     super(props);
@@ -47,6 +48,7 @@ class App extends React.Component<any, any> {
     };
 
     this.moloch = null;
+    this.gasLimit = {gasLimit: 677577};
 
     if (typeof window !== 'undefined') {
       this.web3Modal = new Web3Modal({
@@ -112,16 +114,23 @@ class App extends React.Component<any, any> {
       return;
     }
 
-    await this.moloch.submitProposal(
-      this.state.address, 
-      0,
-      10,
-      100,
-      '0x6b175474e89094c44da98b954eedeac495271d0f',
-      0, 
-      '0x6b175474e89094c44da98b954eedeac495271d0f', 
-      'all hail moloch'
-    );
+    try {
+      const data = await this.moloch.submitProposal(
+        this.state.address, 
+        0,
+        10,
+        0,
+        '0x8f2e097E79B1c51Be9cBA42658862f0192C3E487',
+        0, 
+        '0x8f2e097E79B1c51Be9cBA42658862f0192C3E487', 
+        'all hail moloch',
+        this.gasLimit
+      );
+      data.wait();
+      console.log(data);
+    } catch (err) {
+      console.log('Error: ', err);
+    }
   }
 
   /*public async withdraw() {
@@ -131,14 +140,22 @@ class App extends React.Component<any, any> {
 
     await this.moloch.rageQuit();
   }*/
+
+  public setAmount(i) {
+    console.log(i);
+  }
+  public setShares(i) {
+    console.log(i);
+  }
  
   render() {
     const { data, statusData } = this.props;
     const { connected } = this.state;
+    const donateAction = connected ? () => this.pledgeVotingMember() : () => this.connectWallet();
     return (
       <>
         <Header connect={() => this.connectWallet()} connected={connected} />
-        <Pledge connect={() => this.connectWallet()} pledge={() => this.pledgeVotingMember()} data={data} connected={connected} />
+        <Pledge setAmount={(i) => this.setAmount(i)} setShares={(i) => this.setShares(i)} donateAction={() => donateAction()} data={data} />
         <Status statusData={statusData} obd_status={data.obd_status}/>
         <Footer />
       </>

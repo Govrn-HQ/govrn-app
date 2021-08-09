@@ -1,8 +1,20 @@
+import Head from 'next/head'
 import App from '../components/App'
+import Airtable from 'airtable'
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 
-const Index: React.FC<any> = ({ data, statusData }) => {
+const Index: React.FC<any> = ({ data, statusData, graphData }) => {
   return (
-    <App data={data} statusData={statusData} />
+    <>
+      <Head>
+        <title>Govrn</title>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
+        <meta httpEquiv="Content-Security-Policy" content="connect-src ws: wss: https: http:" />
+      </Head>
+      <App data={data} statusData={statusData} />
+    </>
   );
 }
 
@@ -46,16 +58,46 @@ async function getStatus(base: any) {
   return data;
 }
 
+async function getGraphData(client: any) {
+  if(client == null) {
+    return;
+  }
+
+  const contractQuery =
+    `query {
+      moloches(where: {summoner: "0x109DFb5382175062888017245905eF8f4376fC1B"}) {
+        id
+        version
+        summoner
+        newContract
+        summoningTime
+        totalLoot
+      }
+    }`;
+
+  const { data } = await client.query({
+    query: gql(contractQuery)
+  });
+  
+  return data;
+}
+
 export async function getServerSideProps() {
-  const Airtable = require('airtable');
   const base = new Airtable({apiKey: 'keyaudliIldliyUJz'}).base('appDlPdTF1Nd833iw');
   const data = await getOBDs(base);
   const statusData = await getStatus(base);
 
+  const client = new ApolloClient({
+    uri: "https://api.thegraph.com/subgraphs/name/odyssy-automaton/daohaus-kovan",
+    cache: new InMemoryCache()
+  });
+  const graphData = await getGraphData(client);
+
   return {
     props: {
       data,
-      statusData
+      statusData,
+      graphData
     }
   }
 }

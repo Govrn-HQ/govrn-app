@@ -1,3 +1,4 @@
+import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Status.module.css'
@@ -32,11 +33,11 @@ const Status: React.FC<IStatusProps> = ({ statusData, obd_status }) => {
   return (
     <div className={styles.status}>
       <h3>{statusData.display_title}</h3>
-      <p>{statusData.display_description}</p>
+      <ReactMarkdown className={styles.statusDesc}>{statusData.display_description}</ReactMarkdown>
       <div className={styles.statusMsg}>
         <div>
           <span>1</span>
-          <h4>Request for<br/>Outcome-Based Donation</h4>
+          <h4>Request for<br/>OBD</h4>
         </div>
         <div>
           <span>2</span>

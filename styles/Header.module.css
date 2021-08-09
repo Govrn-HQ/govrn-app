@@ -4,7 +4,6 @@
   align-items: center;
   margin-top: 15px;
   padding: 0px 8%;
-  font-family: 'Proxima Nova', sans-serif;
 }
 
 .linkText {
@@ -23,7 +22,8 @@
   border: 1px solid #e02097;
   border-radius: 25px;
   color: #e02097;
-  padding: 7px 15px 7px 15px;
+  padding: 7px 15px;
+  font-weight: 600;
   font-size: 16px;
 }
 
@@ -43,6 +43,7 @@
 }
 
 .greeting p {
+  font-weight: 400;
   font-size: 15px;
   color: #000000;
   padding: 13px;

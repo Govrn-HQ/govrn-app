@@ -117,9 +117,9 @@ class App extends React.Component<any, any> {
     try {
       const data = await this.moloch.submitProposal(
         this.state.address, 
-        0,
+        5,
         10,
-        0,
+        1,
         '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
         0,
         '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d', 

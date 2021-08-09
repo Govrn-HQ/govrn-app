@@ -119,7 +119,7 @@ class App extends React.Component<any, any> {
         this.state.address, 
         5,
         10,
-        1,
+        0,
         '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
         0,
         '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d', 

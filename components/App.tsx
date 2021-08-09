@@ -120,10 +120,10 @@ class App extends React.Component<any, any> {
         0,
         10,
         0,
-        '0x8f2e097E79B1c51Be9cBA42658862f0192C3E487',
-        0, 
-        '0x8f2e097E79B1c51Be9cBA42658862f0192C3E487', 
-        'all hail moloch',
+        '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
+        0,
+        '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d', 
+        'Submit Proposal For OBD',
         this.gasLimit
       );
       data.wait();

@@ -38,7 +38,7 @@ const Pledge: React.FC<IPledgeProps> = ({ setAmount, setShares, donateAction, da
           <h6>Invest in Outcome</h6>
           <p>Invest in the outcome and receive voting shares at a 10/1 ratio.</p>
           <input type="number" placeholder="Amount (DAI)" onChange={(e) => setAmount(e.target.value)} />
-          <button onClick={donateAction}>Donate</button>
+          <button onClick={() => donateAction()}>Donate</button>
         </div>
         <div className={`${styles.actionForm} ${styles.float_right}`}>
           <h6>Withdraw Investment</h6>

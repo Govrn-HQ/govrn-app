@@ -141,10 +141,10 @@ class App extends React.Component<any, any> {
     await this.moloch.rageQuit();
   }*/
 
-  public setAmount(i) {
+  public setAmount(i: number) {
     console.log(i);
   }
-  public setShares(i) {
+  public setShares(i: number) {
     console.log(i);
   }
  
@@ -155,7 +155,7 @@ class App extends React.Component<any, any> {
     return (
       <>
         <Header connect={() => this.connectWallet()} connected={connected} />
-        <Pledge setAmount={(i) => this.setAmount(i)} setShares={(i) => this.setShares(i)} donateAction={() => donateAction()} data={data} />
+        <Pledge setAmount={(i: number) => this.setAmount(i)} setShares={(i: number) => this.setShares(i)} donateAction={() => donateAction()} data={data} />
         <Status statusData={statusData} obd_status={data.obd_status}/>
         <Footer />
       </>

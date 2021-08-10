@@ -150,10 +150,10 @@ class App extends React.Component<any, any> {
     console.log(allowInt);
 
     if (this.amount > allowInt) {
-      await wxdai.approve(contractAddress.Moloch, (this.amount-allowInt));
+      await wxdai.approve(contractAddress.Moloch, this.amount);
     }
 
-    /*try {
+    try {
       const data = await this.moloch.submitProposal(
         this.state.address, 
         Math.floor(this.amount / 10),
@@ -162,11 +162,12 @@ class App extends React.Component<any, any> {
         '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
         0,
         '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d', 
-        'Submit Proposal For OBD 3'
+        'Submit Proposal For OBD 3',
+        {gasLimit: 1000000}
       );
     } catch (err) {
       console.log('Error: ', err);
-    }*/
+    }
   }
 
   /*public async approve() {

@@ -127,7 +127,7 @@ class App extends React.Component<any, any> {
   }
 
   public async donate() {
-    if (this.moloch == null || this.amount !== 0 || this.state.chainId !== 100) {
+    if (this.moloch == null || this.amount === 0 || this.state.chainId !== 100) {
       return;
     }
 
@@ -145,13 +145,13 @@ class App extends React.Component<any, any> {
     
     const allowance = await wxdai.allowance(this.state.address, contractAddress.Moloch);
     
-    console.log(allowance);
+    console.log(parseInt(allowance));
 
     if (parseInt(allowance) === 0) {
       await wxdai.approve(contractAddress.Moloch, this.amount);
     }
 
-    try {
+    /*try {
       const data = await this.moloch.submitProposal(
         this.state.address, 
         Math.floor(this.amount / 10),
@@ -164,7 +164,7 @@ class App extends React.Component<any, any> {
       );
     } catch (err) {
       console.log('Error: ', err);
-    }
+    }*/
   }
 
   /*public async approve() {

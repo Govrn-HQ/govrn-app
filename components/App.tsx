@@ -138,17 +138,19 @@ class App extends React.Component<any, any> {
     )
 
     const balance = await wxdai.balanceOf(this.state.address);
+    const balInt = parseInt(balance);
 
     if (this.amount > parseInt(balance)) {
       return;
     }
     
     const allowance = await wxdai.allowance(this.state.address, contractAddress.Moloch);
-    
-    console.log(parseInt(allowance));
+    const allowInt = parseInt(allowance);
 
-    if (parseInt(allowance) === 0) {
-      await wxdai.approve(contractAddress.Moloch, this.amount);
+    console.log(allowInt);
+
+    if (this.amount > allowInt) {
+      await wxdai.approve(contractAddress.Moloch, (this.amount-allowInt));
     }
 
     /*try {

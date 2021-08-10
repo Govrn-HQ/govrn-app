@@ -1,6 +1,7 @@
 import React from 'react'
 import { ethers } from 'ethers'
 import MolochArtifact from '../contracts/Moloch.json'
+import WXDAIArtifact from '../contracts/WXDAI.json'
 import contractAddress from '../contracts/contract-address.json'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
@@ -39,6 +40,8 @@ class App extends React.Component<any, any> {
   public web3Modal: Web3Modal;
   public state: IAppState;
   public moloch: any;
+  public amount: number;
+  public shares: number;
   public gasLimit: object;
 
   constructor(props: any) {
@@ -47,15 +50,23 @@ class App extends React.Component<any, any> {
       ...INITIAL_STATE
     };
 
+    this.amount = 0;
+    this.shares = 0;
     this.moloch = null;
     this.gasLimit = {gasLimit: 677577};
 
     if (typeof window !== 'undefined') {
       this.web3Modal = new Web3Modal({
         network: "mainnet",
-        cacheProvider: false,
+        cacheProvider: true,
         providerOptions
       });
+    }
+  }
+
+  public componentDidMount() {
+    if (this.web3Modal.cachedProvider) {
+      this.connectWallet();
     }
   }
 
@@ -85,8 +96,14 @@ class App extends React.Component<any, any> {
       console.log(info);
     });
     provider.on("accountsChanged", async (accounts: string[]) => {
-      await this.setState({ address: accounts[0] });
-      console.log(this.state.address);
+      const account = accounts[0];
+      if (typeof account !== 'undefined') {
+        await this.setState({ address: account });
+        console.log(this.state.address);
+      } else {
+        this.web3Modal.clearCachedProvider();
+        this.setState({ ...INITIAL_STATE });
+      }
     });
     provider.on("chainChanged", async (chainId: string) => {
       await this.setState({ chainId: parseInt(chainId, 16) });
@@ -114,7 +131,19 @@ class App extends React.Component<any, any> {
       return;
     }
 
-    try {
+    const wxdai = new ethers.Contract(
+      '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
+      WXDAIArtifact,
+      this.state.web3Provider.getSigner(0)
+    )
+
+    const balance = await wxdai.balanceOf(this.state.address);
+
+    console.log ('myfinal ' + balance);
+
+    wxdai.approve(contractAddress.Moloch, 1);
+
+    /*try {
       const data = await this.moloch.submitProposal(
         this.state.address, 
         5,
@@ -130,7 +159,7 @@ class App extends React.Component<any, any> {
       console.log(data);
     } catch (err) {
       console.log('Error: ', err);
-    }
+    }*/
   }
 
   /*public async withdraw() {
@@ -141,21 +170,41 @@ class App extends React.Component<any, any> {
     await this.moloch.rageQuit();
   }*/
 
-  public setAmount(i: number) {
-    console.log(i);
+  public setAmount(a: string) {
+    const num = parseInt(a, 10);
+
+    if (isNaN(num) || num <= 0) {
+      return;
+    }
+
+    this.amount = num;
+    console.log(this.amount);
   }
-  public setShares(i: number) {
-    console.log(i);
+
+  public setShares(s: string) {
+    const num = parseInt(s, 10);
+
+    if (isNaN(num) || num <= 0) {
+      return;
+    }
+
+    this.shares = num;
+    console.log(this.shares);
   }
  
   render() {
     const { data, statusData } = this.props;
     const { connected } = this.state;
     const donateAction = connected ? () => this.pledgeVotingMember() : () => this.connectWallet();
+    const actions = {
+      //connect: this.connectWallet,
+      //pledge: this.pledge
+      
+    }
     return (
       <>
         <Header connect={() => this.connectWallet()} connected={connected} />
-        <Pledge setAmount={(i: number) => this.setAmount(i)} setShares={(i: number) => this.setShares(i)} donateAction={() => donateAction()} data={data} />
+        <Pledge setAmount={(a: string) => this.setAmount(a)} setShares={(s: string) => this.setShares(s)} donateAction={() => donateAction()} data={data} />
         <Status statusData={statusData} obd_status={data.obd_status}/>
         <Footer />
       </>

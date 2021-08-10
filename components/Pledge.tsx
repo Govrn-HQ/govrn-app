@@ -44,7 +44,7 @@ const Pledge: React.FC<IPledgeProps> = ({ setAmount, setShares, donateAction, da
           <h6>Withdraw Investment</h6>
           <p>Trade back your voting shares for your original investment minus existing distributions.</p>
           <input type="number" placeholder="Shares" onChange={(e) => setShares(e.target.value)} />
-          <button>Ragequit</button> 
+          <button disabled={true}>Ragequit</button> 
         </div>
       </div>
     </div>

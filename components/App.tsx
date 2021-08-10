@@ -145,7 +145,9 @@ class App extends React.Component<any, any> {
     
     const allowance = await wxdai.allowance(this.state.address, contractAddress.Moloch);
     
-    if (parseInt(allowance) == 0) {
+    console.log(allowance);
+
+    if (parseInt(allowance) === 0) {
       await wxdai.approve(contractAddress.Moloch, this.amount);
     }
 

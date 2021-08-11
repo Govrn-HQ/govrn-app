@@ -167,12 +167,14 @@ class App extends React.Component<any, any> {
     )
 
     const balance = await wxdai.balanceOf(this.state.address);
+    console.log(ethers.utils.formatEther(balance));
 
     if (abn.gt(balance)) {
       return false;
     }
     
     const allowance = await wxdai.allowance(this.state.address, contractAddress.Moloch);
+    console.log(ethers.utils.formatEther(allowance));
 
     if (abn.gt(allowance)) {
       try {

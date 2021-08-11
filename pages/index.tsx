@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import App from '../components/App'
+import contractAddress from '../contracts/contract-address.json'
 import Airtable from 'airtable'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 
@@ -65,28 +66,19 @@ async function getGraphData(client: any) {
 
   const contractQuery =
     `query {
-      moloches(where: {id: "0x55cd67ec877ef72318b56df59a4c287c0a7925d3"}) {
+      moloches(where: {id: "${contractAddress.Moloch}"}) {
         totalLoot
-        members
-      }
-      members (where: {id: "0x55cd67ec877ef72318b56df59a4c287c0a7925d3-member-0xf3cd37071a7c1e69e0036d077982d12794f85742"}) {
-		    shares
-        loot
+        members {
+          id
+		      shares
+          loot
+        }
       }
     }`;
 
   const { data } = await client.query({
     query: gql(contractQuery)
   });
-
-  const totalDonated = data['moloches'][0]['totalLoot'];
-  const totalDonors = data['moloches'][0]['members'].length;
-
-  /*console.log(totalDonated);
-  console.log(totalDonors);
-  console.log(data);
-  console.log(data['members'][0]['loot']);
-  console.log(data['members'][0]['shares']);*/
   
   return data;
 }

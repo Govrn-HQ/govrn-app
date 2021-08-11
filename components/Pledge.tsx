@@ -1,24 +1,34 @@
 import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
 import Image from 'next/image'
+import contractAddress from '../contracts/contract-address.json'
 import styles from '../styles/Pledge.module.css'
 
 interface IPledgeProps {
   actions: any;
   data: any;
   graphData: any;
-  connected: boolean;
+  stateVars: any;
 }
 
-const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, connected }) => {
+const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars }) => {
+  let loot, shares;
+  loot = shares = 0;
+  const id = contractAddress.Moloch+'-member-'+stateVars.address;
   const moloches = graphData['moloches'][0];
-  const members = graphData['members'][0];
-
+  const members = moloches['members'];
   const totalDonated = moloches['totalLoot'];
   const totalDonors = moloches['members'].length;
 
-  const loot = members['loot']
-  const shares = members['shares'];
+  members.forEach((member: any) => {
+    let compareId = member['id'];
+    if (compareId === id) {
+      console.log('hi');
+      loot = member['loot'];
+      shares = member['shares'];
+    }
+  });
+
   return (
     <div className={styles.pledge}>
       <div className={styles.imgDiv}>
@@ -45,14 +55,14 @@ const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, connected })
         <div className={`${styles.actionForm} ${styles.float_left}`}>
           <h6>Invest in Outcome</h6>
           <p>Invest in the outcome and receive voting shares at a 10/1 ratio.</p>
-          <input type="number" placeholder="Amount (DAI)" onChange={(e) => actions.setAmount(e.target.value)} disabled={!connected}/>
-          <button onClick={actions.donate} disabled={!connected}>Donate</button>
+          <input type="number" placeholder="Amount (DAI)" onChange={(e) => actions.setAmount(e.target.value)} disabled={!stateVars.connected}/>
+          <button onClick={actions.donate} disabled={!stateVars.connected}>Donate</button>
         </div>
         <div className={`${styles.actionForm} ${styles.float_right}`}>
           <h6>Withdraw Investment</h6>
           <p>Trade back your voting shares for your original investment minus existing distributions.</p>
-          <input type="number" placeholder="Shares" onChange={(e) => actions.setShares(e.target.value)} disabled={!connected}/>
-          <button disabled={!connected}>Ragequit</button> 
+          <input type="number" placeholder="Shares" onChange={(e) => actions.setShares(e.target.value)} disabled={!stateVars.connected}/>
+          <button disabled={!stateVars.connected}>Ragequit</button> 
         </div>
       </div>
     </div>

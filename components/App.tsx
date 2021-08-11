@@ -221,13 +221,14 @@ class App extends React.Component<any, any> {
  
   render() {
     const { data, statusData, graphData } = this.props;
-    const { connected } = this.state;
+    const { connected, address } = this.state;
     const actions = {
       donate: () => this.donate(),
       setAmount: (a: string) => this.setAmount(a),
       setShares: (s: string) => this.setShares(s)
     }
-    const stateVariables = {
+    const stateVars = {
+      address,
       connected
     }
     return (
@@ -237,7 +238,7 @@ class App extends React.Component<any, any> {
           actions={actions}
           data={data}
           graphData={graphData}
-          connected={connected} 
+          stateVars={stateVars} 
         />
         <Status statusData={statusData} obd_status={data.obd_status}/>
         <Footer />

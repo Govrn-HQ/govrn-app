@@ -22,7 +22,9 @@ const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars })
 
   members.forEach((member: any) => {
     let compareId = member['id'];
-    if (compareId === id) {
+    console.log('compare' + compareId);
+    console.log('id' + id);
+    if (compareId == id) {
       console.log('hi');
       loot = member['loot'];
       shares = member['shares'];

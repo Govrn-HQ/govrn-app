@@ -127,34 +127,18 @@ class App extends React.Component<any, any> {
   }
 
   public async donate() {
-    if (this.moloch == null || this.amount === 0 || this.state.chainId !== 100) {
+    if (this.moloch === null || this.amount === 0) {
       return;
     }
 
-    const wxdai = new ethers.Contract(
-      '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
-      WXDAIArtifact,
-      this.state.web3Provider.getSigner(0)
-    )
+    const approved = await this.approve();
 
-    const balance = await wxdai.balanceOf(this.state.address);
-    const balInt = parseInt(balance);
-
-    if (this.amount > parseInt(balance)) {
+    if (!approved) {
       return;
-    }
-    
-    const allowance = await wxdai.allowance(this.state.address, contractAddress.Moloch);
-    const allowInt = parseInt(allowance);
-
-    console.log(allowInt);
-
-    if (this.amount > allowInt) {
-      await wxdai.approve(contractAddress.Moloch, this.amount);
     }
 
     try {
-      const data = await this.moloch.submitProposal(
+      await this.moloch.submitProposal(
         this.state.address, 
         Math.floor(this.amount / 10),
         0,
@@ -170,7 +154,11 @@ class App extends React.Component<any, any> {
     }
   }
 
-  /*public async approve() {
+  public async approve() {
+    if (this.state.chainId !== 100) {
+      return false;
+    }
+
     const wxdai = new ethers.Contract(
       '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
       WXDAIArtifact,
@@ -178,11 +166,25 @@ class App extends React.Component<any, any> {
     )
 
     const balance = await wxdai.balanceOf(this.state.address);
+    console.log(parseInt(balance));
 
-    console.log ('myfinal ' + balance);
+    if (this.amount > parseInt(balance)) {
+      return false;
+    }
+    
+    const allowance = await wxdai.allowance(this.state.address, contractAddress.Moloch);
+    console.log(parseInt(allowance));
 
-    wxdai.approve(contractAddress.Moloch, 1);
-  }*/
+    if (this.amount > parseInt(allowance)) {
+      try {
+        await wxdai.approve(contractAddress.Moloch, this.amount);
+      } catch (err) {
+        console.log('Error: ', err);
+      }
+    }
+
+    return true;
+  }
 
   /*public async withdraw() {
     if (this.moloch == null) {

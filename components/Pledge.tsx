@@ -1,5 +1,4 @@
 import ReactMarkdown from 'react-markdown'
-//import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Pledge.module.css'
@@ -7,36 +6,19 @@ import styles from '../styles/Pledge.module.css'
 interface IPledgeProps {
   actions: any;
   data: any;
+  graphData: any;
   connected: boolean;
 }
 
-const Pledge: React.FC<IPledgeProps> = ({ actions, data, connected }) => {
-  /*const [amount, setAmount] = useState(0);
-  const [shares, setShares] = useState(0);
+const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, connected }) => {
+  const moloches = graphData['moloches'][0];
+  const members = graphData['members'][0];
 
-  function handleAmount(a: string) {
-    const num = parseInt(a, 10);
+  const totalDonated = moloches['totalLoot'];
+  const totalDonors = moloches['members'].length;
 
-    if (isNaN(num) || num <= 0) {
-      setAmount(0);
-      return;
-    }
-
-    setAmount(num);
-    console.log(amount);
-  }
-
-  function handleShares(s: string) {
-    const num = parseInt(s, 10);
-
-    if (isNaN(num) || num <= 0) {
-      setShares(0);
-      return;
-    }
-
-    setShares(num);
-    console.log(shares);
-  }*/
+  const loot = members['loot']
+  const shares = members['shares'];
   return (
     <div className={styles.pledge}>
       <div className={styles.imgDiv}>
@@ -52,12 +34,12 @@ const Pledge: React.FC<IPledgeProps> = ({ actions, data, connected }) => {
         <ReactMarkdown className={styles.description}>{data.description}</ReactMarkdown>
         <div className={styles.donation}>
           <div>
-            <p><b>Total Donated:</b> $</p>
-            <p><b>Total Donors:</b></p>
+            <p><b>Total Donated:</b> ${totalDonated}</p>
+            <p><b>Total Donors:</b> {totalDonors}</p>
           </div>
           <div>
-            <p><b>Your Donation:</b> $</p>
-            <p><b>Your Votes:</b></p>
+            <p><b>Your Donation:</b> ${loot}</p>
+            <p><b>Your Votes:</b> {shares}</p>
           </div>
         </div>
         <div className={`${styles.actionForm} ${styles.float_left}`}>

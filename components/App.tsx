@@ -1,5 +1,5 @@
 import React from 'react'
-import { ethers } from 'ethers'
+import { ethers, BigNumber } from 'ethers'
 import MolochArtifact from '../contracts/Moloch.json'
 import WXDAIArtifact from '../contracts/WXDAI.json'
 import contractAddress from '../contracts/contract-address.json'
@@ -131,7 +131,8 @@ class App extends React.Component<any, any> {
       return;
     }
 
-    const approved = await this.approve();
+    const amountBN = ethers.utils.parseEther(this.amount.toString()); 
+    const approved = await this.approve(amountBN);
 
     if (!approved) {
       return;
@@ -142,11 +143,11 @@ class App extends React.Component<any, any> {
         this.state.address, 
         Math.floor(this.amount / 10),
         0,
-        this.amount,
+        amountBN,
         '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
         0,
         '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d', 
-        'Submit Proposal For OBD 3',
+        'Submit Proposal For OBD 4',
         {gasLimit: 1000000}
       );
     } catch (err) {
@@ -154,7 +155,7 @@ class App extends React.Component<any, any> {
     }
   }
 
-  public async approve() {
+  public async approve(abn: BigNumber) {
     if (this.state.chainId !== 100) {
       return false;
     }
@@ -166,18 +167,16 @@ class App extends React.Component<any, any> {
     )
 
     const balance = await wxdai.balanceOf(this.state.address);
-    console.log(parseInt(balance));
 
-    if (this.amount > parseInt(balance)) {
+    if (abn.gt(balance)) {
       return false;
     }
     
     const allowance = await wxdai.allowance(this.state.address, contractAddress.Moloch);
-    console.log(parseInt(allowance));
 
-    if (this.amount > parseInt(allowance)) {
+    if (abn.gt(allowance)) {
       try {
-        await wxdai.approve(contractAddress.Moloch, this.amount);
+        await wxdai.approve(contractAddress.Moloch, abn);
       } catch (err) {
         console.log('Error: ', err);
       }
@@ -219,7 +218,7 @@ class App extends React.Component<any, any> {
   }
  
   render() {
-    const { data, statusData } = this.props;
+    const { data, statusData, graphData } = this.props;
     const { connected } = this.state;
     const actions = {
       donate: () => this.donate(),
@@ -233,8 +232,9 @@ class App extends React.Component<any, any> {
       <>
         <Header connect={() => this.connectWallet()} connected={connected} />
         <Pledge
-          actions={actions} 
+          actions={actions}
           data={data}
+          graphData={graphData}
           connected={connected} 
         />
         <Status statusData={statusData} obd_status={data.obd_status}/>

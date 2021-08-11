@@ -13,7 +13,7 @@ const Index: React.FC<any> = ({ data, statusData, graphData }) => {
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
         <meta httpEquiv="Content-Security-Policy" content="connect-src ws: wss: https: http:" />
       </Head>
-      <App data={data} statusData={statusData} />
+      <App data={data} statusData={statusData} graphData={graphData} />
     </>
   );
 }
@@ -65,19 +65,28 @@ async function getGraphData(client: any) {
 
   const contractQuery =
     `query {
-      moloches(where: {summoner: "0x109DFb5382175062888017245905eF8f4376fC1B"}) {
-        id
-        version
-        summoner
-        newContract
-        summoningTime
+      moloches(where: {id: "0x55cd67ec877ef72318b56df59a4c287c0a7925d3"}) {
         totalLoot
+        members
+      }
+      members (where: {id: "0x55cd67ec877ef72318b56df59a4c287c0a7925d3-member-0xf3cd37071a7c1e69e0036d077982d12794f85742"}) {
+		    shares
+        loot
       }
     }`;
 
   const { data } = await client.query({
     query: gql(contractQuery)
   });
+
+  const totalDonated = data['moloches'][0]['totalLoot'];
+  const totalDonors = data['moloches'][0]['members'].length;
+
+  /*console.log(totalDonated);
+  console.log(totalDonors);
+  console.log(data);
+  console.log(data['members'][0]['loot']);
+  console.log(data['members'][0]['shares']);*/
   
   return data;
 }
@@ -88,7 +97,7 @@ export async function getServerSideProps() {
   const statusData = await getStatus(base);
 
   const client = new ApolloClient({
-    uri: "https://api.thegraph.com/subgraphs/name/odyssy-automaton/daohaus-kovan",
+    uri: "https://api.thegraph.com/subgraphs/name/odyssy-automaton/daohaus-xdai",
     cache: new InMemoryCache()
   });
   const graphData = await getGraphData(client);

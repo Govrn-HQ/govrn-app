@@ -7,8 +7,15 @@
 
 @font-face {
   font-family: 'Proxima Nova';
-  src: url('../assets/fonts/Proxima-Nova-Bold.woff') format('woff');
+  src: url('../assets/fonts/Proxima-Nova-SBold.woff') format('woff');
   font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url('../assets/fonts/Proxima-Nova-Bold.woff') format('woff');
+  font-weight: 800;
   font-style: normal;
 }
 
@@ -38,6 +45,14 @@ a {
 
 .hide {
   display: none;
+}
+
+.color_light {
+  color: #6d7783;
+}
+
+.color_dark {
+  color: #222525;
 }
 
 .width_0 {

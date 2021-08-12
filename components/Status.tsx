@@ -37,23 +37,23 @@ const Status: React.FC<IStatusProps> = ({ statusData, obd_status }) => {
       <div className={styles.statusMsg}>
         <div>
           <span>1</span>
-          <h4>Request for<br/>OBD</h4>
+          <h4 className={obd_status === 'Request' ? 'color_dark' : 'color_light'}>Request for<br/>OBD</h4>
         </div>
         <div>
           <span>2</span>
-          <h4>Proposals Submitted</h4>
+          <h4 className={obd_status === 'Proposal Submitted' ? 'color_dark' : 'color_light'}>Proposals Submitted</h4>
         </div>
         <div>
           <span>3</span>
-          <h4>Voting</h4>
+          <h4 className={obd_status === 'Voting' ? 'color_dark' : 'color_light'}>Voting</h4>
         </div>
         <div>
           <span>4</span>
-          <h4>In Progress</h4>
+          <h4 className={obd_status === 'In Progress' ? 'color_dark' : 'color_light'}>In Progress</h4>
         </div>
         <div>
           <span>5</span>
-          <h4>Closed</h4>
+          <h4 className={obd_status === 'Closed' ? 'color_dark' : 'color_light'}>Closed</h4>
         </div>
       </div>
       <div className={styles.statusBarWrap}>

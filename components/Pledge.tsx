@@ -12,8 +12,8 @@ interface IPledgeProps {
 }
 
 const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars }) => {
-  let loot, shares;
-  loot = shares = 0;
+  let yourDonation, yourVotes;
+  yourDonation = yourVotes = 0;
   const id = contractAddress.Moloch+'-member-'+stateVars.address.toLowerCase();
   const moloches = graphData['moloches'][0];
   const members = moloches['members'];
@@ -22,12 +22,9 @@ const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars })
 
   members.forEach((member: any) => {
     let compareId = member['id'];
-    console.log(id);
-    console.log(compareId);
     if (compareId === id) {
-      console.log('hi');
-      loot = member['loot'];
-      shares = member['shares'];
+      //yourDonation = ['']
+      yourVotes = member['loot'];
     }
   });
 
@@ -50,8 +47,8 @@ const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars })
             <p><b>Total Donors:</b> {totalDonors}</p>
           </div>
           <div>
-            <p><b>Your Donation:</b> ${loot}</p>
-            <p><b>Your Votes:</b> {shares}</p>
+            <p><b>Your Donation:</b> ${yourDonation}</p>
+            <p><b>Your Votes:</b> {yourVotes}</p>
           </div>
         </div>
         <div className={`${styles.actionForm} ${styles.float_left}`}>

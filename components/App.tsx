@@ -127,7 +127,7 @@ class App extends React.Component<any, any> {
   }
 
   public async donate() {
-    if (this.moloch === null || this.amount === 0) {
+    if (this.moloch == null || this.amount === 0) {
       return;
     }
 
@@ -141,8 +141,8 @@ class App extends React.Component<any, any> {
     try {
       await this.moloch.submitProposal(
         this.state.address, 
-        Math.floor(this.amount / 10),
         0,
+        Math.floor(this.amount / 10),
         amountBN,
         '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
         0,
@@ -187,13 +187,19 @@ class App extends React.Component<any, any> {
     return true;
   }
 
-  /*public async withdraw() {
-    if (this.moloch == null) {
+  public async withdraw() {
+    if (this.moloch == null || this.shares === 0) {
       return;
     }
 
-    await this.moloch.rageQuit();
-  }*/
+    const sharesBN = ethers.utils.parseEther(this.shares.toString());
+    
+    try {
+      await this.moloch.rageQuit(sharesBN, 0);
+    } catch (err) {
+      console.log('Error: ', err);
+    }
+  }
 
   public setAmount(a: string) {
     const num = parseInt(a, 10);
@@ -224,6 +230,7 @@ class App extends React.Component<any, any> {
     const { connected, address } = this.state;
     const actions = {
       donate: () => this.donate(),
+      withdraw: () => this.withdraw(),
       setAmount: (a: string) => this.setAmount(a),
       setShares: (s: string) => this.setShares(s)
     }

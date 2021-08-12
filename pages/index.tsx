@@ -41,14 +41,29 @@ async function getOBDs(base: any) {
   return data;
 }
 
-async function getStatus(base: any) {
+async function getStatus(base: any, obd_status: string) {
   if(base == null) {
     return;
   }
 
   const table = base('Status'); 
   const records = await table.select({}).firstPage();
-  const record = records[0];
+  let record = records[0];
+
+  switch(obd_status) {
+    case 'Proposal Submitted':
+      record = records[1];
+      break;
+    case 'Voting':
+      record = records[2];
+      break;
+    case 'In Progress':
+      record = records[3];
+      break;
+    case 'Closed':
+      record = records[4];
+      break;
+  }
 
   const data = {
     name: record.get('Name'),
@@ -86,7 +101,8 @@ async function getGraphData(client: any) {
 export async function getServerSideProps() {
   const base = new Airtable({apiKey: 'keyaudliIldliyUJz'}).base('appDlPdTF1Nd833iw');
   const data = await getOBDs(base);
-  const statusData = await getStatus(base);
+  const obd_status = (data == null) ? '' : data.obd_status;
+  const statusData = await getStatus(base, obd_status);
 
   const client = new ApolloClient({
     uri: "https://api.thegraph.com/subgraphs/name/odyssy-automaton/daohaus-xdai",

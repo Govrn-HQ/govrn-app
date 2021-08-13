@@ -4,10 +4,16 @@ import MolochArtifact from '../contracts/Moloch.json'
 import WXDAIArtifact from '../contracts/WXDAI.json'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
+import toast, { Toaster } from 'react-hot-toast'
 import Header from './Header'
 import Pledge from './Pledge'
 import Status from './Status'
 import Footer from './Footer'
+
+interface ProviderMessage {
+  type: string;
+  data: unknown;
+}
 
 interface IAppState {
   provider: any;
@@ -111,6 +117,10 @@ class App extends React.Component<any, any> {
     provider.on("disconnect", (error: { code: number; message: string }) => {
       console.log(error);
     });
+    provider.on("message", (message: ProviderMessage) => {
+      console.log(message);
+      toast('Here is your toast.');
+    });
   }
 
   private initContract() {
@@ -138,7 +148,7 @@ class App extends React.Component<any, any> {
     }
 
     try {
-      await this.moloch.submitProposal(
+      const hi = await this.moloch.submitProposal(
         this.state.address, 
         0,
         Math.floor(this.amount / 10),
@@ -149,8 +159,10 @@ class App extends React.Component<any, any> {
         'Submit Proposal For OBD 4',
         {gasLimit: 1000000}
       );
+      console.log(hi);
     } catch (err) {
       console.log('Error: ', err);
+      toast('Here is your toast.');
     }
   }
 
@@ -177,7 +189,8 @@ class App extends React.Component<any, any> {
 
     if (abn.gt(allowance)) {
       try {
-        await wxdai.approve(this.props.data.contract_id.toLowerCase(), abn);
+        const hi = await wxdai.approve(this.props.data.contract_id.toLowerCase(), abn);
+        console.log(hi);
       } catch (err) {
         console.log('Error: ', err);
       }
@@ -239,6 +252,7 @@ class App extends React.Component<any, any> {
     }
     return (
       <>
+        <Toaster />
         <Header connect={() => this.connectWallet()} connected={connected} />
         <Pledge
           actions={actions}

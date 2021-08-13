@@ -2,7 +2,6 @@ import React from 'react'
 import { ethers, BigNumber } from 'ethers'
 import MolochArtifact from '../contracts/Moloch.json'
 import WXDAIArtifact from '../contracts/WXDAI.json'
-import contractAddress from '../contracts/contract-address.json'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import Header from './Header'
@@ -120,7 +119,7 @@ class App extends React.Component<any, any> {
     }
 
     this.moloch = new ethers.Contract(
-      contractAddress.Moloch,
+      this.props.data.contract_id.toLowerCase(),
       MolochArtifact.abi,
       this.state.web3Provider.getSigner(0)
     );
@@ -173,12 +172,12 @@ class App extends React.Component<any, any> {
       return false;
     }
     
-    const allowance = await wxdai.allowance(this.state.address, contractAddress.Moloch);
+    const allowance = await wxdai.allowance(this.state.address, this.props.data.contract_id.toLowerCase());
     console.log(ethers.utils.formatEther(allowance));
 
     if (abn.gt(allowance)) {
       try {
-        await wxdai.approve(contractAddress.Moloch, abn);
+        await wxdai.approve(this.props.data.contract_id.toLowerCase(), abn);
       } catch (err) {
         console.log('Error: ', err);
       }

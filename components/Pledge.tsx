@@ -1,7 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 import Link from 'next/link'
 import Image from 'next/image'
-import contractAddress from '../contracts/contract-address.json'
 import styles from '../styles/Pledge.module.css'
 
 interface IPledgeProps {
@@ -14,7 +13,7 @@ interface IPledgeProps {
 const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars }) => {
   let yourDonation, yourVotes;
   yourDonation = yourVotes = 0;
-  const id = contractAddress.Moloch+'-member-'+stateVars.address.toLowerCase();
+  const id = data.contract_id.toLowerCase()+'-member-'+stateVars.address.toLowerCase();
   const moloches = graphData['moloches'][0];
   const members = moloches['members'];
   const totalDonated = moloches['totalLoot'];

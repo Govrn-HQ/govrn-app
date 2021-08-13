@@ -3,6 +3,8 @@ import App from '../components/App'
 import Airtable from 'airtable'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 
+const OBDIndex = 0;
+
 const Index: React.FC<any> = ({ data, statusData, graphData }) => {
   return (
     <>
@@ -48,7 +50,7 @@ async function getStatus(base: any, obd_status: string) {
 
   const table = base('Status'); 
   const records = await table.select({}).firstPage();
-  let record = records[0];
+  let record = records[OBDIndex];
 
   switch(obd_status) {
     case 'Proposal Submitted':

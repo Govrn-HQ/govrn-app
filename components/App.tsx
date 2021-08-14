@@ -10,11 +10,6 @@ import Pledge from './Pledge'
 import Status from './Status'
 import Footer from './Footer'
 
-interface ProviderMessage {
-  type: string;
-  data: unknown;
-}
-
 interface IAppState {
   provider: any;
   web3Provider: any;
@@ -117,10 +112,6 @@ class App extends React.Component<any, any> {
     provider.on("disconnect", (error: { code: number; message: string }) => {
       console.log(error);
     });
-    provider.on("message", (message: ProviderMessage) => {
-      console.log(message);
-      toast('Here is your toast.');
-    });
   }
 
   private initContract() {
@@ -148,7 +139,7 @@ class App extends React.Component<any, any> {
     }
 
     try {
-      const hi = await this.moloch.submitProposal(
+      const membership = await this.moloch.submitProposal(
         this.state.address, 
         0,
         Math.floor(this.amount / 10),
@@ -159,10 +150,15 @@ class App extends React.Component<any, any> {
         'Submit Proposal For OBD 4',
         {gasLimit: 1000000}
       );
-      console.log(hi);
+      toast.success('Success! Transaction ID: ' + membership.hash, {
+        duration: 3500,
+        position: 'top-right',
+      });
     } catch (err) {
-      console.log('Error: ', err);
-      toast('Here is your toast.');
+      toast.error('Error: ' + err.message, {
+        duration: 2000,
+        position: 'top-right',
+      });
     }
   }
 
@@ -189,10 +185,16 @@ class App extends React.Component<any, any> {
 
     if (abn.gt(allowance)) {
       try {
-        const hi = await wxdai.approve(this.props.data.contract_id.toLowerCase(), abn);
-        console.log(hi);
+        const approve = await wxdai.approve(this.props.data.contract_id.toLowerCase(), abn);
+        toast.success('Success! Transaction ID: ' + approve.hash, {
+          duration: 3500,
+          position: 'top-right',
+        });
       } catch (err) {
-        console.log('Error: ', err);
+        toast.error('Error: ' + err.message, {
+          duration: 2000,
+          position: 'top-right',
+        });
       }
     }
 
@@ -203,13 +205,18 @@ class App extends React.Component<any, any> {
     if (this.moloch == null || this.shares === 0) {
       return;
     }
-
-    const sharesBN = ethers.utils.parseEther(this.shares.toString());
     
     try {
-      await this.moloch.rageQuit(sharesBN, 0);
+      const rageQuit = await this.moloch.rageQuit(0, this.shares);
+      toast.success('Success! Transaction ID: ' + rageQuit.hash, {
+        duration: 3500,
+        position: 'top-right',
+      });
     } catch (err) {
-      console.log('Error: ', err);
+      toast.error('Error: ' + err.message, {
+        duration: 2000,
+        position: 'top-right',
+      });
     }
   }
 
@@ -236,7 +243,7 @@ class App extends React.Component<any, any> {
     this.shares = num;
     console.log(this.shares);
   }
- 
+
   render() {
     const { data, statusData, graphData } = this.props;
     const { connected, address } = this.state;
@@ -252,13 +259,43 @@ class App extends React.Component<any, any> {
     }
     return (
       <>
-        <Toaster />
         <Header connect={() => this.connectWallet()} connected={connected} />
         <Pledge
           actions={actions}
           data={data}
           graphData={graphData}
           stateVars={stateVars} 
+        />
+        <Toaster
+          toastOptions={{
+            success: {
+              style: {
+                background: '#E02097',
+                color: 'white',
+                fontWeight: 600,
+                fontSize: '15px',
+                padding: '15px',
+                wordBreak: 'break-word',
+              },
+              iconTheme: {
+                primary: 'white',
+                secondary: '#E02097',
+              },
+            },
+            error: {
+              style: {
+                background: '#ED4337',
+                color: 'white',
+                fontWeight: 600,
+                padding: '15px',
+                wordBreak: 'break-word',
+              },
+              iconTheme: {
+                primary: 'white',
+                secondary: '#ED4337',
+              },
+            },
+          }}
         />
         <Status statusData={statusData} obd_status={data.obd_status}/>
         <Footer />

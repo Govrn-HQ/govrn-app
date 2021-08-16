@@ -87,7 +87,8 @@ async function getGraphData(client: any, contract_id: string) {
         totalLoot
         members {
           id
-		      shares
+	  tokenTribute
+	  shares
           loot
         }
       }

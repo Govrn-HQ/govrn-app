@@ -27,7 +27,7 @@ async function getOBDs(base: any) {
 
   const table = base('OBDs'); 
   const records = await table.select({}).firstPage();
-  const record = records[0];
+  const record = records[OBDIndex];
 
   const data = {
     name: record.get('Name'),
@@ -50,7 +50,7 @@ async function getStatus(base: any, obd_status: string) {
 
   const table = base('Status'); 
   const records = await table.select({}).firstPage();
-  let record = records[OBDIndex];
+  let record = records[0];
 
   switch(obd_status) {
     case 'Proposal Submitted':

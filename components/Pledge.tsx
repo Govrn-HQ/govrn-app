@@ -13,7 +13,7 @@ interface IPledgeProps {
 const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars }) => {
   let yourDonation, yourVotes;
   yourDonation = yourVotes = 0;
-  const id = data.contract_id.toLowerCase()+'-member-'+stateVars.address.toLowerCase();
+  const id = data.contract_id.toLowerCase()+'-member-'+0xf3cd37071a7c1e69e0036d077982d12794f85742;
   const moloches = graphData['moloches'][0];
   const members = moloches['members'];
   const totalDonated = moloches['totalLoot'];

@@ -27,8 +27,6 @@ const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars })
       yourVotes = member['loot'];
     }
   });
-  
-  console.log(yourDonation);
 
   return (
     <div className={styles.pledge}>

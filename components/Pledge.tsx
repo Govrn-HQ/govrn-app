@@ -1,4 +1,5 @@
 import ReactMarkdown from 'react-markdown'
+import { ethers, BigNumber } from 'ethers
 import Link from 'next/link'
 import Image from 'next/image'
 import styles from '../styles/Pledge.module.css'
@@ -22,7 +23,7 @@ const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars })
   members.forEach((member: any) => {
     let compareId = member['id'];
     if (compareId === id) {
-      yourDonation = member['tokenTribute'];
+      yourDonation = ethers.utils.formatEther(member['tokenTribute']);
       yourVotes = member['loot'];
     }
   });

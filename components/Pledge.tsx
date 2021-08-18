@@ -12,8 +12,7 @@ interface IPledgeProps {
 }
 
 const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars }) => {
-  let yourDonation, yourVotes;
-  yourDonation = yourVotes = 0;
+  let yourDonation = '0', yourVotes = 0;
   const id = data.contract_id.toLowerCase()+'-member-'+stateVars.address.toLowerCase();
   const moloches = graphData['moloches'][0];
   const members = moloches['members'];
@@ -61,7 +60,7 @@ const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars })
           <h6>Withdraw Investment</h6>
           <p>Trade back your voting shares for your original investment minus existing distributions.</p>
           <input type="number" placeholder="Shares" onChange={(e) => actions.setShares(e.target.value)} disabled={!stateVars.connected}/>
-          <button disabled={!stateVars.connected}>Ragequit</button> 
+          <button onClick={actions.withdraw} disabled={!stateVars.connected}>Ragequit</button> 
         </div>
       </div>
     </div>

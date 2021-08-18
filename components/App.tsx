@@ -147,7 +147,7 @@ class App extends React.Component<any, any> {
         '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
         0,
         '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d', 
-        'Submit Proposal For OBD 4',
+        'Pledge To OBD',
         {gasLimit: 1000000}
       );
       toast.success('Success! Transaction ID: ' + membership.hash, {
@@ -206,9 +206,26 @@ class App extends React.Component<any, any> {
       return;
     }
     
+    let memberShares = 0, loot = 0;
+    const id = this.props.data.contract_id.toLowerCase()+'-member-'+this.state.address.toLowerCase();
+    const moloches = this.props.graphData['moloches'][0];
+    const members = moloches['members'];
+
+    members.forEach((member: any) => {
+      let compareId = member['id'];
+      if (compareId === id) {
+        memberShares = member['shares'];
+        loot = member['loot'];
+      }
+    });
+
+    if (this.shares > loot) {
+      return;
+    }
+
     try {
-      const rageQuit = await this.moloch.rageQuit(0, this.shares);
-      toast.success('Success! Transaction ID: ' + rageQuit.hash, {
+      const ragequit = await this.moloch.ragequit(memberShares, this.shares);
+      toast.success('Success! Transaction ID: ' + ragequit.hash, {
         duration: 3500,
         position: 'top-right',
       });

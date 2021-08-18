@@ -154,7 +154,7 @@ class App extends React.Component<any, any> {
         'Pledge To OBD',
         {gasLimit: 1000000}
       );
-      toast.success('Success! Transaction ID: ' + membership.hash, {
+      toast.success(<a target="_blank" rel="noreferrer" href={`https://blockscout.com/xdai/mainnet/tx/${membership.hash}`}>Success! Transaction ID: {membership.hash}</a>, {
         duration: 3500,
         position: 'top-right',
       });
@@ -198,9 +198,9 @@ class App extends React.Component<any, any> {
     if (abn.gt(allowance)) {
       try {
         const approve = await wxdai.approve(this.props.data.contract_id.toLowerCase(), abn);
-        toast.success('Success! Transaction ID: ' + approve.hash, {
-          duration: 3500,
-          position: 'top-right',
+        toast.success(<a target="_blank" rel="noreferrer" href={`https://blockscout.com/xdai/mainnet/tx/${approve.hash}`}>Success! Transaction ID: {approve.hash}</a>, {
+        duration: 3500,
+        position: 'top-right',
         });
       } catch (err) {
         toast.error('Error: ' + err.message, {
@@ -245,7 +245,7 @@ class App extends React.Component<any, any> {
 
     try {
       const ragequit = await this.moloch.ragequit(memberShares, this.shares);
-      toast.success('Success! Transaction ID: ' + ragequit.hash, {
+      toast.success(<a target="_blank" rel="noreferrer" href={`https://blockscout.com/xdai/mainnet/tx/${ragequit.hash}`}>Success! Transaction ID: {ragequit.hash}</a>, {
         duration: 3500,
         position: 'top-right',
       });
@@ -304,6 +304,7 @@ class App extends React.Component<any, any> {
         <Toaster
           toastOptions={{
             success: {
+              className:'toast',
               style: {
                 background: '#E02097',
                 color: 'white',

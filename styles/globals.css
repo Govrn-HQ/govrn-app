@@ -40,7 +40,11 @@ body {
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
+}
+
+.toast a {
+  color: white;
 }
 
 .hide {

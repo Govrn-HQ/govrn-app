@@ -128,6 +128,10 @@ class App extends React.Component<any, any> {
 
   public async donate() {
     if (this.moloch == null || this.amount === 0) {
+      toast.error('Error: amount must be greater than 0', {
+        duration: 2000,
+        position: 'top-right',
+      });
       return;
     }
 
@@ -164,6 +168,10 @@ class App extends React.Component<any, any> {
 
   public async approve(abn: BigNumber) {
     if (this.state.chainId !== 100) {
+      toast.error('Error: please switch to the correct network', {
+        duration: 2000,
+        position: 'top-right',
+      });
       return false;
     }
 
@@ -177,6 +185,10 @@ class App extends React.Component<any, any> {
     console.log(ethers.utils.formatEther(balance));
 
     if (abn.gt(balance)) {
+      toast.error('Error: balance is too low', {
+        duration: 2000,
+        position: 'top-right',
+      });
       return false;
     }
     
@@ -203,6 +215,10 @@ class App extends React.Component<any, any> {
 
   public async withdraw() {
     if (this.moloch == null || this.shares === 0) {
+      toast.error('Error: shares must be greater than 0', {
+        duration: 2000,
+        position: 'top-right',
+      });
       return;
     }
     
@@ -220,6 +236,10 @@ class App extends React.Component<any, any> {
     });
 
     if (this.shares > loot) {
+      toast.error('Error: not enough loot shares', {
+        duration: 2000,
+        position: 'top-right',
+      });
       return;
     }
 
@@ -246,7 +266,6 @@ class App extends React.Component<any, any> {
     }
 
     this.amount = num;
-    console.log(this.amount);
   }
 
   public setShares(s: string) {
@@ -258,7 +277,6 @@ class App extends React.Component<any, any> {
     }
 
     this.shares = num;
-    console.log(this.shares);
   }
 
   render() {

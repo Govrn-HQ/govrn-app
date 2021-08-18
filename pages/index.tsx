@@ -37,7 +37,8 @@ async function getOBDs(base: any) {
     topic_badge: record.get('topic_badge'),
     display_name: record.get('display_name'),
     community_badge: record.get('community_badge'),
-    description: record.get('description')
+    description: record.get('description'),
+    chain: record.get('chain')
   };
 
   return data;

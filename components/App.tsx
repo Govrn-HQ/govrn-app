@@ -1,6 +1,7 @@
 import React from 'react'
 import { ethers, BigNumber } from 'ethers'
 import MolochArtifact from '../contracts/Moloch.json'
+import DAIArtifact from '../contracts/DAI.json'
 import WXDAIArtifact from '../contracts/WXDAI.json'
 import Web3Modal from 'web3modal'
 import WalletConnectProvider from '@walletconnect/web3-provider'
@@ -44,6 +45,9 @@ class App extends React.Component<any, any> {
   public moloch: any;
   public amount: number;
   public shares: number;
+  private site: string = '';
+  private tokenAddress: string = '';
+  private artifact: any = null;
 
   constructor(props: any) {
     super(props);
@@ -54,6 +58,16 @@ class App extends React.Component<any, any> {
     this.moloch = null;
     this.amount = 0;
     this.shares = 0;
+
+    if (this.props.data.chain === '1') {
+      this.site = 'https://etherscan.io/tx/';
+      this.tokenAddress = '0x6b175474e89094c44da98b954eedeac495271d0f';
+      this.artifact = DAIArtifact;
+    } else if (this.props.data.chain === '100') {
+      this.site = 'https://blockscout.com/xdai/mainnet/tx/';
+      this.tokenAddress = '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d';
+      this.artifact = WXDAIArtifact;
+    }
 
     if (typeof window !== 'undefined') {
       this.web3Modal = new Web3Modal({
@@ -148,13 +162,13 @@ class App extends React.Component<any, any> {
         0,
         Math.floor(this.amount / 10),
         amountBN,
-        '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
+        this.tokenAddress,
         0,
-        '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d', 
+        this.tokenAddress, 
         'Pledge To OBD',
         {gasLimit: 1000000}
       );
-      toast.success(<a target="_blank" rel="noreferrer" href={`https://blockscout.com/xdai/mainnet/tx/${membership.hash}`}>Success! Transaction ID: {membership.hash}</a>, {
+      toast.success(<a target="_blank" rel="noreferrer" href={`${this.site}${membership.hash}`}>Success! Transaction ID: {membership.hash}</a>, {
         duration: 3500,
         position: 'top-right',
       });
@@ -167,7 +181,7 @@ class App extends React.Component<any, any> {
   }
 
   public async approve(abn: BigNumber) {
-    if (this.state.chainId !== 100) {
+    if (this.state.chainId.toString() !== this.props.data.chain) {
       toast.error('Error: please switch to the correct network', {
         duration: 2000,
         position: 'top-right',
@@ -175,13 +189,13 @@ class App extends React.Component<any, any> {
       return false;
     }
 
-    const wxdai = new ethers.Contract(
-      '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
-      WXDAIArtifact,
+    const token = new ethers.Contract(
+      this.tokenAddress,
+      this.artifact,
       this.state.web3Provider.getSigner(0)
     )
 
-    const balance = await wxdai.balanceOf(this.state.address);
+    const balance = await token.balanceOf(this.state.address);
     console.log(ethers.utils.formatEther(balance));
 
     if (abn.gt(balance)) {
@@ -192,13 +206,13 @@ class App extends React.Component<any, any> {
       return false;
     }
     
-    const allowance = await wxdai.allowance(this.state.address, this.props.data.contract_id.toLowerCase());
+    const allowance = await token.allowance(this.state.address, this.props.data.contract_id.toLowerCase());
     console.log(ethers.utils.formatEther(allowance));
 
     if (abn.gt(allowance)) {
       try {
-        const approve = await wxdai.approve(this.props.data.contract_id.toLowerCase(), abn);
-        toast.success(<a target="_blank" rel="noreferrer" href={`https://blockscout.com/xdai/mainnet/tx/${approve.hash}`}>Success! Transaction ID: {approve.hash}</a>, {
+        const approve = await token.approve(this.props.data.contract_id.toLowerCase(), abn);
+        toast.success(<a target="_blank" rel="noreferrer" href={`${this.site}${approve.hash}`}>Success! Transaction ID: {approve.hash}</a>, {
         duration: 3500,
         position: 'top-right',
         });
@@ -245,7 +259,7 @@ class App extends React.Component<any, any> {
 
     try {
       const ragequit = await this.moloch.ragequit(memberShares, this.shares);
-      toast.success(<a target="_blank" rel="noreferrer" href={`https://blockscout.com/xdai/mainnet/tx/${ragequit.hash}`}>Success! Transaction ID: {ragequit.hash}</a>, {
+      toast.success(<a target="_blank" rel="noreferrer" href={`${this.site}${ragequit.hash}`}>Success! Transaction ID: {ragequit.hash}</a>, {
         duration: 3500,
         position: 'top-right',
       });

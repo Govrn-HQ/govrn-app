@@ -3,7 +3,7 @@ import App from '../components/App'
 import Airtable from 'airtable'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 
-const OBDIndex = 0;
+const RECORD_ID = 'rec3sMKF2FwCGJAFa';
 
 const Index: React.FC<any> = ({ data, statusData, graphData }) => {
   return (
@@ -26,8 +26,7 @@ async function getOBDs(base: any) {
   }
 
   const table = base('OBDs'); 
-  const records = await table.select({}).firstPage();
-  const record = records[OBDIndex];
+  const record = await table.find(RECORD_ID);
 
   const data = {
     name: record.get('Name'),
@@ -35,6 +34,7 @@ async function getOBDs(base: any) {
     obd_status: record.get('obd_status'),
     contract_id: record.get('contract_id'),
     topic_badge: record.get('topic_badge'),
+    image: record.get('image'),
     display_name: record.get('display_name'),
     community_badge: record.get('community_badge'),
     description: record.get('description'),

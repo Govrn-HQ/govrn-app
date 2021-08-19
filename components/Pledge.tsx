@@ -32,7 +32,7 @@ const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars })
       <div className={styles.imgDiv}>
         <p>{data.obd_status.toUpperCase()} FOR OBD</p>
         <div className={styles.img}>
-          <Image src='/web3devs.svg' width={170} height={170} alt='web3 developers' />
+          <Image src={data.image[0].url} width={170} height={170} alt='web3 developers' />
         </div>
         <span className={styles.gtc}>{data.community_badge}</span>
         <span className={styles.gvrn}>{data.topic_badge}</span> 

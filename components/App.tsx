@@ -235,6 +235,14 @@ class App extends React.Component<any, any> {
       });
       return;
     }
+
+    if (this.state.chainId.toString() !== this.props.data.chain) {
+      toast.error('Error: please switch to the correct network', {
+        duration: 2000,
+        position: 'top-right',
+      });
+      return;
+    }
     
     let memberShares = 0, loot = 0;
     const id = this.props.data.contract_id.toLowerCase()+'-member-'+this.state.address.toLowerCase();

@@ -12,20 +12,29 @@ interface IPledgeProps {
 }
 
 const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars }) => {
-  let yourDonation = '0', yourVotes = 0;
+  let yourDonation = '0', yourVotes = 0, shares = 0;
   const id = data.contract_id.toLowerCase()+'-member-'+stateVars.address.toLowerCase();
   const moloches = graphData['moloches'][0];
   const members = moloches['members'];
+  const totalShares = moloches['totalShares'];
   const totalDonated = moloches['totalLoot'];
+  let tokenBalances = moloches['tokenBalances'][0]['tokenBalance'];
   const totalDonors = moloches['members'].length;
 
   members.forEach((member: any) => {
     let compareId = member['id'];
     if (compareId === id) {
-      yourDonation = ethers.utils.formatEther(member['tokenTribute']);
+      //yourDonation = ethers.utils.formatEther(member['tokenTribute']);
+      shares = member['shares'];
       yourVotes = member['loot'];
     }
   });
+
+  if (yourVotes > 0) {
+    tokenBalances = parseFloat(ethers.utils.formatEther(tokenBalances)).toPrecision(12);
+    const interim = (shares + yourVotes) / (parseInt(totalShares) + parseInt(totalDonated));
+    yourDonation = (interim * tokenBalances).toFixed(2);
+  }
 
   return (
     <div className={styles.pledge}>

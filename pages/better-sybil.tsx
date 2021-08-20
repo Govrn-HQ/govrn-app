@@ -85,7 +85,11 @@ async function getGraphData(client: any, contract_id: string) {
   const contractQuery =
     `query {
       moloches(where: {id: "${contract_id.toLowerCase()}"}) {
+        totalShares
         totalLoot
+        tokenBalances(where: {guildBank: true}) {
+          tokenBalance
+        }
         members {
           id
 	  tokenTribute

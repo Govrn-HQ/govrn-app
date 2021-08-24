@@ -64,14 +64,14 @@ class App extends React.Component<any, any> {
 
     if (this.props.data.chain === "1") {
       this.site = "https://etherscan.io/tx/";
+    } else if (this.props.data.chain === "4") {
+      this.site = "https://rinkeby.etherscan.io/tx/";
+    } else if (this.props.data.chain === "42") {
+      this.site = "https://kovan.etherscan.io/tx/";
     } else if (this.props.data.chain === "100") {
       this.site = "https://blockscout.com/poa/xdai/tx/";
       this.tokenAddress = "0xe91d153e0b41518a2ce8dd3d7944fa863463a97d";
       this.artifact = WXDAIArtifact;
-    } else if (this.props.data.chain === "42") {
-      this.site = "https://kovan.etherscan.io/tx/";
-    } else if (this.props.data.chain === "4") {
-      this.site = "https://rinkeby.etherscan.io/tx/";
     }
 
     if (typeof window !== "undefined") {

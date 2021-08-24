@@ -24,7 +24,6 @@ const Pledge: React.FC<IPledgeProps> = ({ actions, data, graphData, stateVars })
   members.forEach((member: any) => {
     let compareId = member['id'];
     if (compareId === id) {
-      //yourDonation = ethers.utils.formatEther(member['tokenTribute']);
       shares = member['shares'];
       yourVotes = member['loot'];
     }

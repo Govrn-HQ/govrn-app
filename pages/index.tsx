@@ -111,10 +111,24 @@ export async function getServerSideProps() {
   const data = await getOBDs(base);
   const obd_status = (data == null) ? '' : data.obd_status;
   const contract_id = (data == null) ? '' : data.contract_id;
+  const chain = (data == null) ? '' : data.chain;
   const statusData = await getStatus(base, obd_status);
+  let net = "";
+
+  switch(chain) {
+    case '4':
+      net = "-rinkeby";
+      break;
+    case '42':
+      net = "-kovan";
+      break;
+    case '100':
+      net = "-xdai";
+      break;
+  }
 
   const client = new ApolloClient({
-    uri: "https://api.thegraph.com/subgraphs/name/odyssy-automaton/daohaus-xdai",
+    uri: "https://api.thegraph.com/subgraphs/name/odyssy-automaton/daohaus"+net,
     cache: new InMemoryCache()
   });
   const graphData = await getGraphData(client, contract_id);

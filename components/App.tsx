@@ -59,15 +59,18 @@ class App extends React.Component<any, any> {
     this.amount = 0;
     this.shares = 0;
 
-    this.tokenAddress = "0x6b175474e89094c44da98b954eedeac495271d0f";
-    this.artifact = DAIArtifact;
-
     if (this.props.data.chain === "1") {
       this.site = "https://etherscan.io/tx/";
+      this.tokenAddress = "0x6b175474e89094c44da98b954eedeac495271d0f";
+      this.artifact = DAIArtifact;
     } else if (this.props.data.chain === "4") {
       this.site = "https://rinkeby.etherscan.io/tx/";
+      this.tokenAddress = "0x8f2e097E79B1c51Be9cBA42658862f0192C3E487";
+      this.artifact = DAIArtifact;
     } else if (this.props.data.chain === "42") {
       this.site = "https://kovan.etherscan.io/tx/";
+      this.tokenAddress = "0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa";
+      this.artifact = DAIArtifact;
     } else if (this.props.data.chain === "100") {
       this.site = "https://blockscout.com/poa/xdai/tx/";
       this.tokenAddress = "0xe91d153e0b41518a2ce8dd3d7944fa863463a97d";

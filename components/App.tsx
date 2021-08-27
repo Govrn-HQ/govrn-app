@@ -33,7 +33,7 @@ const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
     options: {
-      infuraId: "6eaaa7629e21410ea44bbda3388097fd",
+      infuraId: "a7ca739399d546a0a44d65c7ec14954e",
     },
   },
 };
